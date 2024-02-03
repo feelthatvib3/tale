@@ -2,6 +2,7 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { CommandKit } from 'commandkit';
 import path from 'path';
 import 'dotenv/config';
+import MongoDB from './models/MongoDB';
 
 const { TOKEN } = process.env;
 
@@ -23,4 +24,11 @@ new CommandKit({
 	bulkRegister: true,
 });
 
-client.login(TOKEN);
+(async function () {
+	try {
+		await client.login(TOKEN);
+		await MongoDB.connect();
+	} catch (error) {
+		console.error(error);
+	}
+})();
