@@ -1,22 +1,41 @@
 import type { SlashCommandProps, CommandOptions } from 'commandkit';
-import type { InteractionResponse } from 'discord.js';
-import { SlashCommandBuilder, inlineCode } from 'discord.js';
-import getRandomEmoji from '@utils/getRandomEmoji';
+import type { Message } from 'discord.js';
+import { EmbedBuilder, SlashCommandBuilder, bold } from 'discord.js';
+import { DEFAULT_EMBED_COLOR, ERROR_EMBED_COLOR } from '@constants/colors';
 
 export const data = new SlashCommandBuilder()
 	.setName('ping')
 	.setDescription('Check my pulse for a second time');
 
-export function run({ interaction, client, handler }: SlashCommandProps) {
-	const startTime = Date.now();
+export async function run({ interaction, client, handler }: SlashCommandProps) {
+	try {
+		await interaction.deferReply();
 
-	interaction
-		.reply({ content: inlineCode(getRandomEmoji()), ephemeral: true })
-		.then((interactionResponse: InteractionResponse) => {
-			const endTime = Date.now();
-			const latency = endTime - startTime;
-			interactionResponse.edit(`Hello, friend. Latency is ${latency}ms.`);
-		});
+		const embed: EmbedBuilder = new EmbedBuilder()
+			.setColor(DEFAULT_EMBED_COLOR)
+			.setDescription('⌛️ Measuring latency, hold tight.');
+		const message: Message = await interaction.editReply({ embeds: [embed] });
+
+		const messageCreationTimestamp: number = message.createdTimestamp;
+		const clientLatency: number = Date.now() - messageCreationTimestamp;
+		const APILatency: number = client.ws.ping;
+
+		embed.setDescription(
+			`📡 Client latency is ${bold(`${clientLatency}ms`)}, API latency is ${bold(`${APILatency}ms`)}.`,
+		);
+
+		await message.edit({ embeds: [embed] });
+	} catch (error) {
+		console.error(error);
+
+		const embed: EmbedBuilder = new EmbedBuilder()
+			.setColor(ERROR_EMBED_COLOR)
+			.setDescription('Something went wrong.');
+
+		interaction.replied
+			? await interaction.followUp({ embeds: [embed] })
+			: await interaction.editReply({ embeds: [embed] });
+	}
 }
 
 export const options: CommandOptions = {
