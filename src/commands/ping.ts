@@ -1,6 +1,7 @@
-import type { SlashCommandProps, CommandOptions } from 'commandkit';
+import type { CommandOptions, SlashCommandProps } from 'commandkit';
 import type { Message } from 'discord.js';
 import { EmbedBuilder, SlashCommandBuilder, bold } from 'discord.js';
+
 import { DEFAULT_EMBED_COLOR, ERROR_EMBED_COLOR } from '@constants/colors';
 
 export const data = new SlashCommandBuilder()

@@ -1,7 +1,7 @@
-import { Client, GatewayIntentBits } from 'discord.js';
 import { CommandKit } from 'commandkit';
-import path from 'path';
+import { Client, GatewayIntentBits } from 'discord.js';
 import 'dotenv/config';
+import path from 'path';
 
 const { TOKEN } = process.env;
 
