@@ -6,9 +6,14 @@ import { DEFAULT_EMBED_COLOR, ERROR_EMBED_COLOR } from '@constants/colors';
 
 export const data = new SlashCommandBuilder()
 	.setName('ping')
-	.setDescription('Check my pulse for a second time');
+	.setDescription('Check my pulse for a second time')
+	.setDMPermission(false);
 
-export async function run({ interaction, client, handler }: SlashCommandProps) {
+export async function run({
+	interaction,
+	client,
+	handler,
+}: SlashCommandProps): Promise<void> {
 	try {
 		await interaction.deferReply();
 
