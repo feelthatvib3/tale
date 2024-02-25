@@ -15,7 +15,7 @@
 	},
 	"homepage": "https://github.com/feelthatvib3/tale#readme",
 	"dependencies": {
-		"@prisma/client": "^5.9.1",
+		"@prisma/client": "^5.10.2",
 		"commandkit": "^0.1.10",
 		"discord.js": "^14.14.1",
 		"dotenv": "^16.4.1",
@@ -28,7 +28,7 @@
 		"@typescript-eslint/parser": "^6.20.0",
 		"eslint": "^8.56.0",
 		"prettier": "^3.2.4",
-		"prisma": "^5.9.1",
+		"prisma": "^5.10.2",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.3.3"
 	}
