@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,8 +8,41 @@ datasource db {
 }
 
 model User {
-  id    String    @id @default(auto()) @map("_id") @db.ObjectId
-  games UserGames
+  id     String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId String      @unique
+  games  UserGames?
+  stats  UserMetrics
+}
+
+model Guild {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  guildId     String   @unique
+  eventmakers String[]
+}
+
+model Game {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  gameId     String      @unique
+  host       String
+  players    String[]
+  mvp        String
+  story      StoryPart[]
+  startedAt  DateTime
+  finishedAt DateTime?
+  isAborted  Boolean
+  isFinished Boolean
+}
+
+type UserMetrics {
+  totalGames    Int
+  hostedGames   Int
+  mvpScore      Int
+  bestPartScore Int
+}
+
+type StoryPart {
+  userId   String
+  userPart String
 }
 
 type UserGames {
