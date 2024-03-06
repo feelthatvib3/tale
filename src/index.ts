@@ -3,6 +3,8 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import 'dotenv/config';
 import path from 'path';
 
+import { DEV_GUILD_IDS, DEV_USER_IDS } from '@constants/general';
+
 const { TOKEN } = process.env;
 
 const client = new Client({
@@ -18,8 +20,8 @@ new CommandKit({
 	client,
 	commandsPath: path.join(__dirname, 'commands'),
 	eventsPath: path.join(__dirname, 'events'),
-	devGuildIds: ['1202649097698287667'],
-	devUserIds: ['1028751824670433364'],
+	devGuildIds: DEV_GUILD_IDS,
+	devUserIds: DEV_USER_IDS,
 	skipBuiltInValidations: false,
 	bulkRegister: true,
 });
